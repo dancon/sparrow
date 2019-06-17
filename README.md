@@ -11,7 +11,7 @@
 * GitBook访问地址:<https://yifengyou.gitbooks.io/sparrow/content/>
 * GitHub访问地址:<https://github.com/yifengyou/sparrow/>
 
-```
+```text
 Something I hope you know before go into the coding~
 First, please watch or star this repo, I'll be more happy if you follow me.
 Bug report, questions and discussion are welcome, you can post an issue or pull a request.
@@ -34,7 +34,6 @@ Bug report, questions and discussion are welcome, you can post an issue or pull 
 1. 宿主操作系统采用CentOS 6.8
 2. 编译器Gcc版本 gcc version 4.4.7 20120313（高版本可能需要解决编译问题，看下面常见问题解决）
 
-
 ## 《自制编程语言》目录
 
 * [第0章-一些可能令人迷惑的问题](docs/第0章-一些可能令人迷惑的问题/第0章-一些可能令人迷惑的问题.md)
@@ -54,7 +53,7 @@ Bug report, questions and discussion are welcome, you can post an issue or pull 
 
 1. 编译报错
 
-```
+```text
 vm/core.o：在函数‘primObjectIs’中：
 /root/github/sparrow/src/c4/b/vm/core.c:103：对‘getClassOfObj’未定义的引用
 vm/core.o：在函数‘primObjectType’中：
@@ -68,7 +67,7 @@ make: *** [spr] Error 1
 
 修改makefile文件,在CFLAGS中添加```-fgnu89-inline```
 
-```
+```bash
 CC = gcc
 #CFLAGS = -g -DDEBUG -lm -Wall -I object -I vm -I compiler -I parser -I include -I cli -I gc -W -Wstrict-prototypes -Wmissing-prototypes -Wsystem-headers
 CFLAGS = -g -lm -Wall -I object -I vm -I compiler -I parser -I include -I cli -I gc -W -Wstrict-prototypes -Wmissing-prototypes -Wsystem-headers -fgnu89-inline
@@ -77,16 +76,17 @@ DIRS =  object include cli compiler parser vm gc
 CFILES = $(foreach dir, $(DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.c,%.o,$(CFILES))
 $(TARGET):$(OBJS)
-	$(CC) -o $(TARGET) $(OBJS) $(CFLAGS)
+  $(CC) -o $(TARGET) $(OBJS) $(CFLAGS)
 clean:
-	-$(RM) $(TARGET) $(OBJS)
+  -$(RM) $(TARGET) $(OBJS)
 r: clean $(TARGET)
 ```
 
 修改过后必须先```make clean```一下,你应该知晓makefile是根据时间撮判断，那么先前编译通过的，但是并没有报错不会再次编译，毕竟你也没有改过源码文件，时间撮也没有变。
 
 那么如何批量替换呢？？考验shell脚本编程功底，一句话搞定式
-```
+
+```bash
 find . -name "makefile" | xargs perl -pi -e 's/-Wsystem-headers/-Wsystem-headers -fgnu89-inline/g'
 ```
 
@@ -96,9 +96,8 @@ find . -name "makefile" | xargs perl -pi -e 's/-Wsystem-headers/-Wsystem-headers
 
 ## 总结
 
-```
+```text
   1.基础永远值得花费90%的精力去学习加强。厚积而薄发~
 ```
-
 
 ![1534913291571.png](image/1534913291571.png)
